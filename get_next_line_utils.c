@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:54:50 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/14 16:06:42 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:40:23 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	l = strlen(s);
+	l = ft_strlen(s);
 	if (start >= l)
 		return (ft_strdup(""));
 	if (len > l || start + len > l)
@@ -71,10 +71,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
+	char	*str1;
 	size_t	i;
 	size_t	j;
 
-	i = strlen(s1) + 1;
+	i = ft_strlen(s1) + 1;
 	str = (char *)malloc(i * sizeof(char));
 	if (!str)
 		return (NULL);
@@ -85,5 +86,24 @@ char	*ft_strdup(const char *s1)
 		j++;
 	}
 	str[j] = '\0';
-	return (str);
+	str1 = str;
+	free(str);
+	str = NULL;
+	return (str1);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+	size_t	l;
+
+	i = 0;
+	l = ft_strlen(s);
+	while (i <= l)
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	return (NULL);
 }
