@@ -6,11 +6,12 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:54:50 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/16 13:40:23 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:08:18 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 
 size_t	ft_strlen(const char *s)
 {
@@ -22,23 +23,32 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*str;
 	size_t	i;
 	size_t	j;
 
-	if (!s1)
-		return (strdup(s2));
-	if (!s2)
-		return (strdup(s1));
-	i = strlen(s1);
-	j = strlen(s2);
-	str = (char *)malloc((i + j + 1) * sizeof(char));
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	memcpy((void *)str, (void *)s1, i);
-	memcpy((void *)str + i, (void *)s2, j + 1);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		j++;
+		i++;
+	}
+	str[i] = '\0';
+	free(s1);
 	return (str);
 }
 
@@ -75,8 +85,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 	size_t	j;
 
-	i = ft_strlen(s1) + 1;
-	str = (char *)malloc(i * sizeof(char));
+	i = ft_strlen(s1);
+	str = (char *)malloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	j = 0;
@@ -98,6 +108,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t	l;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	l = ft_strlen(s);
 	while (i <= l)
 	{

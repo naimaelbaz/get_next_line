@@ -6,14 +6,11 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:55:08 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/16 13:41:37 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:17:34 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-
-#define BUFFER_SIZE 5
 
 size_t	ft_mystrlen(const char *s, char c)
 {
@@ -30,8 +27,6 @@ char	*ft_read(int fd, char *str)
 	char		*buff;
 	int			len;
 
-	if (!fd || !BUFFER_SIZE)
-		return (NULL);
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
@@ -57,9 +52,13 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			i;
 
+	if (fd == -1 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (str == NULL)
 		str = strdup("");
 	str = ft_read(fd, str);
+	if (str[0] == '\0')
+		return (NULL);
 	i = ft_mystrlen(str, '\n') + 1;
 	line = ft_substr(str, 0, i);
 	str = ft_substr(str, i, ft_strlen(str));
@@ -68,19 +67,10 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int fd;
-    char *tab;
+	int	fd;
 
-    fd = open("test.txt", O_RDONLY);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    free(tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    close(fd);
-	return (0);
+	fd = open("test.txt", O_RDONLY);
+	// printf("%s", get_next_line(-1));
+	printf("%s", get_next_line(fd));
+	//printf("%s", get_next_line(fd));
 }
