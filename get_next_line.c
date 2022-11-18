@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:55:08 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/18 17:15:17 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:25:34 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_next_str(char *str, size_t len)
 	}
 	new[j] = '\0';
 	free(str);
+	str = NULL;
 	return (new);
 }
 
@@ -81,7 +82,8 @@ char	*get_next_line(int fd)
 	if (!str)
 		return (NULL);
 	if (str[0] == '\0')
-		return (free(str), NULL);
+		return (free(str), str = NULL, NULL);
+		
 	i = ft_mystrlen(str, '\n') + 1;
 	line = ft_substr(str, 0, i);
 	str = ft_next_str(str, ft_strlen(str));

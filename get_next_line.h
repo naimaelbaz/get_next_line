@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:55:45 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/18 15:12:36 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:24:59 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 2
 # endif
 
 size_t	ft_strlen(const char *s);
