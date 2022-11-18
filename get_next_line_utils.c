@@ -6,19 +6,18 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:54:50 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/17 13:08:18 by nel-baz          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:06:36 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 		i++;
 	return (i);
 }
@@ -29,8 +28,8 @@ char	*ft_strjoin(char *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (s1 == NULL)
+		s1 = ft_strdup("");
 	i = 0;
 	j = 0;
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
@@ -43,23 +42,22 @@ char	*ft_strjoin(char *s1, char const *s2)
 	}
 	while (s2[j])
 	{
-		str[i] = s2[j];
+		str[i++] = s2[j];
 		j++;
-		i++;
 	}
 	str[i] = '\0';
 	free(s1);
 	return (str);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
 	size_t	l;
 
 	i = 0;
-	if (!s)
+	if (!s[i])
 		return (NULL);
 	l = ft_strlen(s);
 	if (start >= l)
@@ -81,7 +79,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
-	char	*str1;
 	size_t	i;
 	size_t	j;
 
@@ -96,10 +93,7 @@ char	*ft_strdup(const char *s1)
 		j++;
 	}
 	str[j] = '\0';
-	str1 = str;
-	free(str);
-	str = NULL;
-	return (str1);
+	return (str);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -111,7 +105,7 @@ char	*ft_strchr(const char *s, int c)
 	if (!s)
 		return (NULL);
 	l = ft_strlen(s);
-	while (i <= l)
+	while (i < l)
 	{
 		if (s[i] == (char)c)
 			return ((char *)s + i);
