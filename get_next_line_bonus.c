@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 09:55:08 by nel-baz           #+#    #+#             */
-/*   Updated: 2022/11/22 10:43:36 by nel-baz          ###   ########.fr       */
+/*   Created: 2022/11/22 09:26:20 by nel-baz           #+#    #+#             */
+/*   Updated: 2022/11/22 10:41:21 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s, char c)
 {
@@ -57,29 +57,29 @@ char	*ft_read(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[4096];
 	char		*tmp;
 	char		*line;
 	int			i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (str)
-			return (free(str), str = NULL, NULL);
+		if (str[fd])
+			return (free(str[fd]), str[fd] = NULL, NULL);
 		return (NULL);
 	}
-	str = ft_read(fd, str);
-	if (!str)
+	str[fd] = ft_read(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	i = ft_strlen(str, '\n');
-	line = ft_substr(str, 0, i + 1);
+	i = ft_strlen(str[fd], '\n');
+	line = ft_substr(str[fd], 0, i + 1);
 	if (!line)
 	{
-		if (str)
-			return (free(str), str = NULL, NULL);
+		if (str[fd])
+			return (free(str[fd]), str[fd] = NULL, NULL);
 		return (NULL);
 	}
-	tmp = str;
-	str = ft_substr(tmp, i + 1, ft_strlen(tmp, '\0'));
+	tmp = str[fd];
+	str[fd] = ft_substr(tmp, i + 1, ft_strlen(tmp, '\0'));
 	return (free(tmp), line);
 }
